@@ -1,0 +1,11 @@
+﻿TOPIC
+	about_ADSec
+	
+SHORT DESCRIPTION
+	Explains how to use the ADSec powershell module
+	
+LONG DESCRIPTION
+	<Insert Content here>
+
+KEYWORDS
+	ADSec
