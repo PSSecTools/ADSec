@@ -2,7 +2,7 @@
 	$moduleRoot = (Resolve-Path "$PSScriptRoot\..\..").Path
 	$manifest = ((Get-Content "$moduleRoot\ADSec.psd1") -join "`n") | Invoke-Expression
 	Context "Basic resources validation" {
-		$files = Get-ChildItem "$moduleRoot\functions" -Recurse -File -Filter "*.ps1"
+		$files = Get-ChildItem "$moduleRoot\functions" -Recurse -File | Where-Object Name -like "*.ps1"
 		It "Exports all functions in the public folder" {
 			
 			$functions = (Compare-Object -ReferenceObject $files.BaseName -DifferenceObject $manifest.FunctionsToExport | Where-Object SideIndicator -Like '<=').InputObject
@@ -40,8 +40,22 @@
 		
 		foreach ($assembly in $manifest.RequiredAssemblies)
 		{
-			It "The file $assembly should exist" {
-				Test-Path "$moduleRoot\$assembly" | Should -Be $true
+            if ($assembly -like "*.dll") {
+                It "The file $assembly should exist" {
+                    Test-Path "$moduleRoot\$assembly" | Should -Be $true
+                }
+            }
+            else {
+                It "The file $assembly should load from the GAC" {
+                    { Add-Type -AssemblyName $assembly } | Should -Not -Throw
+                }
+            }
+        }
+		
+		foreach ($tag in $manifest.PrivateData.PSData.Tags)
+		{
+			It "Tags should have no spaces in name" {
+				$tag -match " " | Should -Be $false
 			}
 		}
 	}

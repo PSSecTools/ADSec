@@ -1,24 +1,24 @@
 ﻿@{
 	# Script module or binary module file associated with this manifest
-	ModuleToProcess = 'ADSec.psm1'
+	RootModule = 'ADSec.psm1'
 	
 	# Version number of this module.
 	ModuleVersion = '1.0.0'
 	
 	# ID used to uniquely identify this module
-	GUID = '30e305a9-42c7-42fa-ad9b-3c9ecc1b4d24'
+	GUID = '1cfaca0a-3c7d-47dd-bb9f-9711310a0b9d'
 	
 	# Author of this module
 	Author = 'Friedrich Weinmann'
 	
 	# Company or vendor of this module
-	CompanyName = ''
+	CompanyName = 'Microsoft'
 	
 	# Copyright statement for this module
-	Copyright = 'Copyright (c) 2018 Friedrich Weinmann'
+	Copyright = 'Copyright (c) 2019 Friedrich Weinmann'
 	
 	# Description of the functionality provided by this module
-	Description = 'Tools to manage AD security'
+	Description = 'Module to manage Active Directory Security'
 	
 	# Minimum version of the Windows PowerShell engine required by this module
 	PowerShellVersion = '5.0'
@@ -26,7 +26,7 @@
 	# Modules that must be imported into the global environment prior to importing
 	# this module
 	RequiredModules = @(
-		@{ ModuleName='PSFramework'; ModuleVersion='0.10.28.144' }
+		@{ ModuleName='PSFramework'; ModuleVersion='1.0.35' }
 	)
 	
 	# Assemblies that must be loaded prior to importing this module
