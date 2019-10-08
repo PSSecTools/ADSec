@@ -115,6 +115,7 @@
 			
 			$rulesToPurge = foreach ($rule in $acl.Access)
 			{
+				if ($rule.IsInherited) { continue }
 				if ($rule.IdentityReference -is [System.Security.Principal.NTAccount]) { continue }
 				if ($rule.IdentityReference.AccountDomainSID.Value -in $ExcludeDomainSID) { continue }
 				if ($IncludeDomainSID -and ($rule.IdentityReference.AccountDomainSID.Value -notin $IncludeDomainSID)) { continue }
