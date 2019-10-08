@@ -109,7 +109,7 @@
 		foreach ($pathItem in $Path)
 		{
 			Write-PSFMessage -Level Verbose -String 'Remove-AdsOrphanAce.Searching' -StringValues $pathItem
-			try { $acl = $getAdsAcl.Process($pathItem) }
+			try { $acl = $getAdsAcl.Process($pathItem) | Write-Output }
 			catch { Stop-PSFFunction -String 'Remove-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -ErrorRecord $_ -Cmdlet $PSCmdlet -Continue }
 			if (-not $acl) { Stop-PSFFunction -String 'Remove-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -Cmdlet $PSCmdlet -Continue }
 			
