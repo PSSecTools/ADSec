@@ -1,0 +1,18 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>adParameter</Title>
+			<Shortcut></Shortcut>
+			<Author>Microsoft</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="PowerShell">
+				<![CDATA[$adParameters = $PSBoundParameters | ConvertTo-PSFHashtable -Include Server, Credential
+Assert-ADConnection @adParameters -Cmdlet $PSCmdlet]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
