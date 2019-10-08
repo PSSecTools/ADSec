@@ -93,14 +93,14 @@
 	{
 		foreach ($pathItem in $Path)
 		{
-			try { $getAdsAcl.Process($pathItem) }
+			try { $acl = $getAdsAcl.Process($pathItem) }
 			catch { Stop-PSFFunction -String 'Get-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -ErrorRecord $_ -Cmdlet $PSCmdlet -Continue }
 			if (-not $acl) { Stop-PSFFunction -String 'Get-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -Cmdlet $PSCmdlet -Continue }
 			
 			foreach ($rule in $acl.Access)
 			{
+				if ($rule.IsInherited) { continue }
 				if ($rule.IdentityReference -is [System.Security.Principal.NTAccount]) { continue }
-				
 				if ($rule.IdentityReference.AccountDomainSID.Value -in $ExcludeDomainSID) { continue }
 				if ($IncludeDomainSID -and ($rule.IdentityReference.AccountDomainSID.Value -notin $IncludeDomainSID)) { continue }
 				

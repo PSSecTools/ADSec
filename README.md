@@ -2,7 +2,7 @@
 
 The ADSec powershell module is a toolkit designed to help with several core Active Directory security concerns:
 
- - Delegation of privileges
+ - Delegation & Revocation of privileges
  - Configuring monitoring of active directory object changes
  - Analysis of security relevant AD configuration settings/state
 

@@ -109,12 +109,13 @@
 		foreach ($pathItem in $Path)
 		{
 			Write-PSFMessage -Level Verbose -String 'Remove-AdsOrphanAce.Searching' -StringValues $pathItem
-			try { $acl = $getAdsAcl.Process($pathItem) }
+			try { $acl = $getAdsAcl.Process($pathItem) | Write-Output }
 			catch { Stop-PSFFunction -String 'Remove-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -ErrorRecord $_ -Cmdlet $PSCmdlet -Continue }
 			if (-not $acl) { Stop-PSFFunction -String 'Remove-AdsOrphanAce.Read.Failed' -StringValues $pathItem -EnableException $EnableException -Cmdlet $PSCmdlet -Continue }
 			
 			$rulesToPurge = foreach ($rule in $acl.Access)
 			{
+				if ($rule.IsInherited) { continue }
 				if ($rule.IdentityReference -is [System.Security.Principal.NTAccount]) { continue }
 				if ($rule.IdentityReference.AccountDomainSID.Value -in $ExcludeDomainSID) { continue }
 				if ($IncludeDomainSID -and ($rule.IdentityReference.AccountDomainSID.Value -notin $IncludeDomainSID)) { continue }
