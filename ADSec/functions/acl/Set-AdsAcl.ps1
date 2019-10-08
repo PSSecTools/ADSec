@@ -40,7 +40,7 @@
 		PS C:\> Set-AdsAcl -AclObject $acl -Path $dn -Server fabrikam.com
 	
 		Updates the acl on the object stored in $dn within the fabrikam.com domain.
-#>	
+#>
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param (
 		[Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
