@@ -44,6 +44,7 @@
 		'Get-AdsOrphanAce'
 		'Remove-AdsOrphanAce'
 		'Set-AdsAcl'
+		'Set-AdsOwner'
 	)
 	
 	# Cmdlets to export from this module

@@ -13,7 +13,7 @@
 	'Remove-AdsOrphanAce.Removing'    = 'Removing {0} Access rule' # ($rulesToPurge | Measure-Object).Count
 	'Remove-AdsOrphanAce.Searching'   = 'Searching {0} for orphaned access rules' # $pathItem
 	'Set-AdsAcl.SettingSecurity'	  = 'Updating security settings' # 
-	#'Set-AdsOwner.AlreadyOwned'	      = '{0} is already owned by {1}' # $pathItem, $idReference
-	#'Set-AdsOwner.UnresolvedIdentity' = 'Failed to resolve Identity: {0}' # $Identity
-	#'Set-AdsOwner.UpdatingOwner'	  = 'Updating owner to {0}' # $idReference
+	'Set-AdsOwner.AlreadyOwned'	      = '{0} is already owned by {1}' # $pathItem, $idReference
+	'Set-AdsOwner.UnresolvedIdentity' = 'Failed to resolve Identity: {0}' # $Identity
+	'Set-AdsOwner.UpdatingOwner'	  = 'Updating owner to {0}' # $idReference
 }
