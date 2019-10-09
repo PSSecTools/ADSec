@@ -40,6 +40,7 @@
 	
 	# Functions to export from this module
 	FunctionsToExport = @(
+		'Enable-AdsInheritance'
 		'Get-AdsAcl'
 		'Get-AdsOrphanAce'
 		'Remove-AdsOrphanAce'
