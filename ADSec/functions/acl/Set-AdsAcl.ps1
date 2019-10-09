@@ -43,7 +43,6 @@
 #>
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param (
-		[Parameter(Mandatory = $true, ValueFromPipelineByPropertyName = $true)]
 		[Alias('DistinguishedName')]
 		[string]
 		$Path,
@@ -69,6 +68,15 @@
 	}
 	process
 	{
+		if (-not $Path)
+		{
+			if ($AclObject.DistinguishedName) { $Path = $AclObject.DistinguishedName }
+			else
+			{
+				Stop-PSFFunction -String 'Set-AdsAcl.NoPath' -Target $AclObject -EnableException $EnableException -Category InvalidArgument
+				return
+			}
+		}
 		Invoke-PSFProtectedCommand -ActionString 'Set-AdsAcl.SettingSecurity' -Target $Path -ScriptBlock {
 			Set-ADObject @adParameters -Identity $Path -Replace @{ ntSecurityDescriptor = $AclObject } -ErrorAction Stop
 		} -EnableException $EnableException.ToBool() -PSCmdlet $PSCmdlet

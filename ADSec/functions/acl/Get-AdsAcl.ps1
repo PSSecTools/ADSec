@@ -55,9 +55,14 @@
 		
 		foreach ($pathItem in $Path)
 		{
+			if (-not $pathItem) { continue }
+			Write-PSFMessage -String 'Get-AdsAcl.Processing' -StringValues $pathItem
+			
 			try { $adObject = Get-ADObject @adParameters -Identity $pathItem -Properties ntSecurityDescriptor }
 			catch { Stop-PSFFunction -String 'Get-AdsAcl.ObjectError' -StringValues $pathItem -Target $pathItem -EnableException $EnableException -Cmdlet $PSCmdlet -ErrorRecord $_ -Continue }
-			$adObject.ntSecurityDescriptor | Add-Member -MemberType NoteProperty -Name DistinguishedName -Value $adObject.DistinguishedName -PassThru
+			$aclObject = $adObject.ntSecurityDescriptor
+			Add-Member -InputObject $aclObject -MemberType NoteProperty -Name DistinguishedName -Value $adObject.DistinguishedName -Force
+			$aclObject
 		}
 	}
 }
