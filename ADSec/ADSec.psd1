@@ -3,7 +3,7 @@
 	RootModule = 'ADSec.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '0.2.0'
+	ModuleVersion = '0.2.1'
 	
 	# ID used to uniquely identify this module
 	GUID = '1cfaca0a-3c7d-47dd-bb9f-9711310a0b9d'
