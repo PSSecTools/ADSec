@@ -92,12 +92,8 @@
 			}
 			
 			# Switching to LDAP as owner changes don't work using AD Module
-			$directoryEntry = New-Object System.DirectoryServices.DirectoryEntry(($basePath -f $pathItem))
-			if ($Credential)
-			{
-				$directoryEntry.Username = $Credential.UserName
-				$directoryEntry.Password = $Credential.GetNetworkCredential().Password
-			}
+			if ($Credential) { $directoryEntry = New-Object System.DirectoryServices.DirectoryEntry(($basePath -f $pathItem), $Credential.UserName, $Credential.GetNetworkCredential().Password) }
+			else { $directoryEntry = New-Object System.DirectoryServices.DirectoryEntry(($basePath -f $pathItem)) }
 			
 			Invoke-PSFProtectedCommand -ActionString 'Set-AdsOwner.UpdatingOwner' -ActionStringValues $idReference -ScriptBlock {
 				$secDescriptor = $directoryEntry.InvokeGet('nTSecurityDescriptor')
