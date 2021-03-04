@@ -13,11 +13,19 @@
 	.PARAMETER Identity
 		Identity to make the new owner.
 	
+	.PARAMETER WinRMFailover
+		Whether on execution error it should try again using WinRM.
+		Default-Value determined using the configuration setting 'ADSec.WinRM.FailOver'
+	
 	.PARAMETER Server
 		The server / domain to connect to.
-		
+	
 	.PARAMETER Credential
 		The credentials to use for AD operations.
+	
+	.PARAMETER EnableException
+		This parameters disables user-friendly warnings and enables the throwing of exceptions.
+		This is less user friendly, but allows catching exceptions in calling scripts.
 	
 	.PARAMETER Confirm
 		If this switch is enabled, you will be prompted for confirmation before executing any operations that change state.
@@ -25,13 +33,9 @@
 	.PARAMETER WhatIf
 		If this switch is enabled, no actions are performed but informational messages will be displayed that explain what would happen if the command were to run.
 	
-	.PARAMETER EnableException
-		This parameters disables user-friendly warnings and enables the throwing of exceptions.
-		This is less user friendly, but allows catching exceptions in calling scripts.
-	
 	.EXAMPLE
 		PS C:\> Set-AdsOwner -Path $dn -Identity 'contoso\Domain Admins'
-	
+		
 		Makes the domain admins owner of the path specified in $dn
 #>
 	[CmdletBinding(SupportsShouldProcess = $true)]
@@ -44,6 +48,9 @@
 		[Parameter(Mandatory = $true)]
 		[string]
 		$Identity,
+		
+		[switch]
+		$WinRMFailover = (Get-PSFConfigValue -FullName 'ADSec.WinRM.FailOver'),
 		
 		[string]
 		$Server,
@@ -96,10 +103,39 @@
 			else { $directoryEntry = New-Object System.DirectoryServices.DirectoryEntry(($basePath -f $pathItem)) }
 			
 			Invoke-PSFProtectedCommand -ActionString 'Set-AdsOwner.UpdatingOwner' -ActionStringValues $idReference -ScriptBlock {
-				$secDescriptor = $directoryEntry.InvokeGet('nTSecurityDescriptor')
-				$secDescriptor.Owner = "$idReference"
-				$directoryEntry.InvokeSet('nTSecurityDescriptor', $secDescriptor)
-				$directoryEntry.CommitChanges()
+				try {
+					$secDescriptor = $directoryEntry.InvokeGet('nTSecurityDescriptor')
+					if (-not $secDescriptor) { throw 'Failed to access security information' }
+					$secDescriptor.Owner = "$idReference"
+					$directoryEntry.InvokeSet('nTSecurityDescriptor', $secDescriptor)
+					$directoryEntry.CommitChanges()
+				}
+				catch {
+					if (-not $WinRMFailover) { throw }
+					
+					#region Fallback to WinRM
+					$domainController = Get-ADDomainController @adParameters
+					$credParam = $PSBoundParameters | ConvertTo-PSFHashtable -Include Credential
+					$ldapPath = "LDAP://localhost/$($pathItem)"
+					
+					Invoke-Command -ComputerName $domainController.HostName @credParam -ScriptBlock {
+						param (
+							$Identity,
+							
+							$LdapPath
+						)
+						try {
+							$directoryEntry = New-Object System.DirectoryServices.DirectoryEntry($LdapPath)
+							$secDescriptor = $directoryEntry.InvokeGet('nTSecurityDescriptor')
+							if (-not $secDescriptor) { throw 'Failed to access security information' }
+							$secDescriptor.Owner = $Identity
+							$directoryEntry.InvokeSet('nTSecurityDescriptor', $secDescriptor)
+							$directoryEntry.CommitChanges()
+						}
+						catch { throw }
+					} -ArgumentList "$idReference", $ldapPath -ErrorAction Stop
+					#endregion Fallback to WinRM
+				}
 			} -Target $pathItem -EnableException $EnableException.ToBool() -Continue -PSCmdlet $PSCmdlet
 		}
 	}
