@@ -1,4 +1,8 @@
 ﻿# Changelog
+## 0.2.2 (2020-03-03)
+
+- Upd: Adding failover to WinRM if setting owner fails to work
+
 ## 0.2.1 (2019-12-17)
  - Fix: Set-AdsOwner - custom credentials broken
 
