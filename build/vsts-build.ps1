@@ -30,6 +30,9 @@ if (-not $WorkingDirectory)
 	}
 	else { $WorkingDirectory = $env:SYSTEM_DEFAULTWORKINGDIRECTORY }
 }
+if (-not $WorkingDirectory) {
+	$WorkingDirectory = Split-Path -Path $PSScriptRoot
+}
 #endregion Handle Working Directory Defaults
 
 # Prepare publish folder
