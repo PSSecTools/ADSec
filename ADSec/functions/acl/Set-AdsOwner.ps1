@@ -38,6 +38,7 @@
 		
 		Makes the domain admins owner of the path specified in $dn
 #>
+	[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseUsingScopeModifierInNewRunspaces', '')]
 	[CmdletBinding(SupportsShouldProcess = $true)]
 	Param (
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]

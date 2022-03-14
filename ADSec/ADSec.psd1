@@ -3,7 +3,7 @@
 	RootModule = 'ADSec.psm1'
 	
 	# Version number of this module.
-	ModuleVersion = '0.2.2'
+	ModuleVersion = '1.0.0'
 	
 	# ID used to uniquely identify this module
 	GUID = '1cfaca0a-3c7d-47dd-bb9f-9711310a0b9d'
@@ -40,6 +40,7 @@
 	
 	# Functions to export from this module
 	FunctionsToExport = @(
+		'Disable-AdsInheritance'
 		'Enable-AdsInheritance'
 		'Get-AdsAcl'
 		'Get-AdsOrphanAce'
@@ -49,13 +50,13 @@
 	)
 	
 	# Cmdlets to export from this module
-	CmdletsToExport = ''
+	# CmdletsToExport = ''
 	
 	# Variables to export from this module
-	VariablesToExport = ''
+	# VariablesToExport = ''
 	
 	# Aliases to export from this module
-	AliasesToExport = ''
+	# AliasesToExport = ''
 	
 	# List of all modules packaged with this module
 	ModuleList = @()
@@ -70,19 +71,19 @@
 		PSData = @{
 			
 			# Tags applied to this module. These help with module discovery in online galleries.
-			# Tags = @()
+			Tags = @('ad','activedirectory','security')
 			
 			# A URL to the license for this module.
-			# LicenseUri = ''
+			LicenseUri = 'https://github.com/PSSecTools/ADSec/blob/master/LICENSE'
 			
 			# A URL to the main website for this project.
-			# ProjectUri = ''
+			ProjectUri = 'https://github.com/PSSecTools/ADSec'
 			
 			# A URL to an icon representing this module.
 			# IconUri = ''
 			
 			# ReleaseNotes of this module
-			# ReleaseNotes = ''
+			ReleaseNotes = 'https://github.com/PSSecTools/ADSec/blob/master/ADSec/changelog.md'
 			
 		} # End of PSData hashtable
 		
