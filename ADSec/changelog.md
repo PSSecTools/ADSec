@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 1.0.1 (2022-04-04)
+
+- New: Configuration setting to disable connection verification
+
 ## 1.0.0 (2022-03-14)
 
 - New: Disable-AdsInheritance - disables inheritance on an AD object

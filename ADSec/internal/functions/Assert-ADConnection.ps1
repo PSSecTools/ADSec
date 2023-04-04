@@ -36,6 +36,7 @@
 	
 	process
 	{
+		if (Get-PSFConfigValue -FullName 'ADSec.Connect.NoAssertion') { return }
 		$adParameters = $PSBoundParameters | ConvertTo-PSFHashtable -Include Server, Credential
 		try { $null = Get-ADDomain @adParameters -ErrorAction Stop }
 		catch
