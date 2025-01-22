@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 1.0.3 (2025-01-22)
+
+- Upd: Raised PSFramework Dependency Version to 1.12.346
+- Upd: Get-AdsAcl - Enabled retrieving ACL from deleted objects
+
 ## 1.0.1 (2022-04-04)
 
 - New: Configuration setting to disable connection verification
