@@ -1,9 +1,10 @@
 ﻿# Changelog
 
-## 1.0.3 (2025-01-22)
+## 1.0.4 (2025-01-22)
 
 - Upd: Raised PSFramework Dependency Version to 1.12.346
 - Upd: Get-AdsAcl - Enabled retrieving ACL from deleted objects
+- Upd: Get-AdsAcl - Detect insufficient access rights to retrieve security information
 
 ## 1.0.1 (2022-04-04)
 
