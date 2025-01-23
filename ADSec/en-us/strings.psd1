@@ -13,6 +13,7 @@
 	'Enable-AdsInheritance.Processing'         = 'Starting process to enable inheritance on {0}' # $pathItem
 	'Enable-AdsInheritance.ReadAcl.Failed'     = 'Failed to access acl on {0}' # $pathItem
 	'Enable-AdsInheritance.Updating.Acl'       = 'Enabling inheritance' # 
+	'Get-AdsAcl.NoSecurityProperty'            = 'No security information found on {0}. Ensure you have sufficient access.' # $pathItem
 	'Get-AdsAcl.ObjectError'                   = 'Error accessing item: {0}' # $pathItem
 	'Get-AdsAcl.Processing'                    = 'Retrieving Acl from {0}' # $pathItem
 	'Get-AdsOrphanAce.Read.Failed'             = 'Failed to access {0}' # $pathItem
