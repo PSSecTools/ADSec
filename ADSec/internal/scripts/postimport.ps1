@@ -20,3 +20,6 @@ foreach ($file in (Get-ChildItem "$($script:ModuleRoot)\internal\tepp\*.tepp.ps1
 
 # Load License
 . Import-ModuleFile -Path "$($script:ModuleRoot)\internal\scripts\license.ps1"
+
+# Run initializer
+. Import-ModuleFile -Path "$($script:ModuleRoot)\internal\scripts\initialize.ps1"
