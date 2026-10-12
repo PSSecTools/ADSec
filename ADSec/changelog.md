@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 1.0.5 (2026-10-07)
+
+- Fix: Get-AdsAcl - returns empty ACL objects on PS7
+
 ## 1.0.4 (2025-01-22)
 
 - Upd: Raised PSFramework Dependency Version to 1.12.346
